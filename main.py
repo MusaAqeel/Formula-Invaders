@@ -9,101 +9,29 @@ from pygame import display
 from pygame.locals import *
 
 # Center the Game Application
-
-
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
-
-
-#Text render
-
-
-def text_format(message, textFont, textSize, textColor):
-    newFont=pygame.font.Font(textFont, textSize)
-    newText=newFont.render(message, 0, textColor)
-
-    return newText
-
-
-
 # Colors
-white=(255, 255, 255)
-black=(0, 0, 0)
-gray=(50, 50, 50)
-red=(255, 0, 0)
-green=(0, 255, 0)
-blue=(0, 0, 255)
-yellow=(255, 255, 0)
-grey=(64, 64, 64)
-
-
+white = (255, 255, 255)
+black = (0, 0, 0)
+gray = (50, 50, 50)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+yellow = (255, 255, 0)
+grey = (64, 64, 64)
 
 # Game Fonts
 font = "RetronoidItalic-8Xg2.ttf"
 font2 = "RetronoidItalic-8Xg2.ttf"
 
 
+# Text render
+def text_format(message, textFont, textSize, textColor):
+    newFont = pygame.font.Font(textFont, textSize)
+    newText = newFont.render(message, 0, textColor)
+    return newText
 
-
-# Main Menu
-# Main Menu
-# Main Menu
-def main1_menu():
-
-    menu=True
-    selected="start"
-
-    while menu:
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type==pygame.KEYDOWN:
-                if event.key==pygame.K_UP:
-                    selected="start"
-                elif event.key==pygame.K_DOWN:
-                    selected="quit"
-                if event.key==pygame.K_RETURN:
-                    if selected=="start":
-                        main_menu()
-                    if selected=="quit":
-                        pygame.quit()
-                        quit()
-
-        # Main Menu UI
-        WIN.fill(grey)
-        title=text_format("Formula Invaders", font2, 77, black)
-        if selected=="start":
-            text_start=text_format("START", font2, 60, white)
-        else:
-            text_start = text_format("START", font2, 60, black)
-        if selected=="quit":
-            text_quit=text_format("QUIT", font2, 60, white)
-        else:
-            text_quit = text_format("QUIT", font2, 60, black)
-
-        title_rect=title.get_rect()
-        start_rect=text_start.get_rect()
-        quit_rect=text_quit.get_rect()
-
-
-
-
-
-        #If the user clicks the start button it takes them to main_menu()
-        if start_rect.collidepoint(pygame.mouse.get_pos()):
-            if pygame.mouse.get_pressed()[0]:
-                main_menu()
-
-
-
-
-        # Main Menu Text
-        WIN.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
-        WIN.blit(text_start, (WIDTH / 2 - (start_rect[2] / 2), 300))
-        WIN.blit(text_quit, (WIDTH / 2 - (quit_rect[2] / 2), 360))
-        pygame.display.update()
-        pygame.display.set_caption("Start Menu")
 
 # Initializing
 mainClock = pygame.time.Clock()
@@ -120,17 +48,42 @@ pygame.display.set_caption("F1 Invaders")
 pygame.font.init()
 font = pygame.font.SysFont('Corbel', 15)
 
+# Loading images
+# Enemy Space Ships
+RED_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_red_small.png"))
+GREEN_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_green_small.png"))
+BLUE_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_blue_small.png"))
+# Lasers
+RED_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_red.png"))
+GREEN_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_green.png"))
+BLUE_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_blue.png"))
+YELLOW_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_yellow.png"))
+# Background
+BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")), (WIDTH, HEIGHT))
+
+
+# Checks for collisions
+def collide(obj1, obj2):
+    offset_x = obj2.x - obj1.x
+    offset_y = obj2.y - obj1.y
+    return obj1.mask.overlap(obj2.mask, (offset_x, offset_y)) != None
+
+
+titleFont = pygame.font.Font(font2, 60)
+
 
 # Buttons class
 class button():
     # Setting the button
-    def __init__(self, color, x, y, width, height, text=''):
+    def __init__(self, color, x, y, width, height, text='', textColor=black, menu1=False):
         self.color = color
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.text = text
+        self.textColor = textColor
+        self.menu1 = menu1
 
     # Drawing the button to the window
     def draw(self, win, outline=None):
@@ -140,10 +93,16 @@ class button():
 
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height), 0)
 
-        # Handles text if any
-        if self.text != '':
-            font = pygame.font.SysFont('comicsans', 22)
-            text = font.render(self.text, 1, (0, 0, 0))
+        if self.menu1:
+            mainText = titleFont.render(self.text, 0, self.textColor)
+            text_rect = mainText.get_rect()
+
+            WIN.blit(mainText, (self.x + (self.width / 2 - mainText.get_width() / 2),
+                                self.y + (self.height / 2 - mainText.get_height() / 2)))
+
+        else:
+            buttonFont = pygame.font.SysFont('comicsans', 22)
+            text = buttonFont.render(self.text, 1, (0, 0, 0))
             win.blit(text, (
                 self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
 
@@ -157,6 +116,153 @@ class button():
         return False
 
 
+# Lasers class
+class Laser:
+    # Initializion
+    def __init__(self, x, y, img):
+        self.x = x
+        self.y = y
+        self.img = img
+        self.mask = pygame.mask.from_surface(self.img)
+
+    # Draws the laser
+    def draw(self, window):
+        window.blit(self.img, (self.x, self.y))
+
+    # Moves the laser
+    def move(self, vel):
+        self.y += vel
+
+    # Checks if the laser is off screen
+    def off_screen(self, height):
+        return not (self.y <= height and self.y >= 0)
+
+    # Checks for collisions
+    def collision(self, obj):
+        return collide(self, obj)
+
+
+# Ship class
+class Ship:
+    # Shooting cooldown
+    COOLDOWN = 30
+
+    # Initialization
+    def __init__(self, x, y, health=100):
+        self.x = x
+        self.y = y
+        self.health = health
+        self.ship_img = None
+        self.laser_img = None
+        self.lasers = []
+        self.cool_down_counter = 0
+
+    # Draws the ship
+    def draw(self, window):
+        window.blit(self.ship_img, (self.x, self.y))
+        for laser in self.lasers:
+            laser.draw(window)
+
+    # Moves the laser and handles collisions
+    def move_lasers(self, vel, obj):
+        self.cooldown()
+        for laser in self.lasers:
+            laser.move(vel)
+            if laser.off_screen(HEIGHT):
+                self.lasers.remove(laser)
+            elif laser.collision(obj):
+                obj.health -= 10
+                self.lasers.remove(laser)
+
+    # Handles cooldown on lasers
+    def cooldown(self):
+        if self.cool_down_counter >= self.COOLDOWN:
+            self.cool_down_counter = 0
+        elif self.cool_down_counter > 0:
+            self.cool_down_counter += 1
+
+    # Handles shooting
+    def shoot(self):
+        if self.cool_down_counter == 0:
+            laser = Laser(self.x, self.y, self.laser_img)
+            self.lasers.append(laser)
+            self.cool_down_counter = 1
+
+    # Gets the width of the ship
+    def get_width(self):
+        return self.ship_img.get_width()
+
+    # Gets the height of the ship
+    def get_height(self):
+        return self.ship_img.get_height()
+
+
+# User player class
+class Player(Ship):
+
+    # Initialization
+    def __init__(self, x, y, health=101):
+        super().__init__(x, y, health)
+        self.ship_img = F1_CAR
+        self.laser_img = playerLaser
+        self.mask = pygame.mask.from_surface(self.ship_img)
+        self.max_health = health
+
+    # Handles player shooting
+    def move_lasers(self, vel, objs):
+        self.cooldown()
+        for laser in self.lasers:
+            laser.move(vel)
+            if laser.off_screen(HEIGHT):
+                self.lasers.remove(laser)
+            else:
+                for obj in objs:
+                    if laser.collision(obj):
+                        objs.remove(obj)
+                        if laser in self.lasers:
+                            self.lasers.remove(laser)
+
+    # Draws the users ship and health bar
+    def draw(self, window):
+        super().draw(window)
+        self.healthbar(window)
+
+    # Handles the healthbar
+    def healthbar(self, window):
+        pygame.draw.rect(window, (255, 0, 0),
+                         (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width(), 10))
+        pygame.draw.rect(window, (0, 255, 0), (
+            self.x, self.y + self.ship_img.get_height() + 10,
+            self.ship_img.get_width() * (self.health / self.max_health),
+            10))
+
+
+# Enemey ships
+class Enemy(Ship):
+    COLOR_MAP = {
+        "red": (RED_SPACE_SHIP, RED_LASER),
+        "green": (GREEN_SPACE_SHIP, GREEN_LASER),
+        "blue": (BLUE_SPACE_SHIP, BLUE_LASER)
+    }
+
+    # Initializing
+    def __init__(self, x, y, color, health=100):
+        super().__init__(x, y, health)
+        self.ship_img, self.laser_img = self.COLOR_MAP[color]
+        self.mask = pygame.mask.from_surface(self.ship_img)
+
+    # Moves the enemy ships
+    def move(self, vel):
+        self.y += vel
+
+    # Has the enemy ships shoot
+    def shoot(self):
+        if self.cool_down_counter == 0:
+            laser = Laser(self.x - 20, self.y, self.laser_img)
+            self.lasers.append(laser)
+            self.cool_down_counter = 1
+
+
 # Draws Text
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -165,15 +271,67 @@ def draw_text(text, font, color, surface, x, y):
     surface.blit(textobj, textrect)
 
 
-# Main menu
+# Main Menu
 def main_menu():
+    # Buttons
+    buttonWidths = 200
+    startButton = button(gray, (WIDTH / 2 - buttonWidths / 2), 300, buttonWidths, 70, "START", black, True)
+    startButton.draw(WIN)
+
+    quitButton = button(gray, (WIDTH / 2 - buttonWidths / 2), 400, buttonWidths, 70, "QUIT", black, True)
+    quitButton.draw(WIN)
+
+    menu = True
+    selected = "start"
+
+    # Function to update the buttons
+    def redraw_window():
+        WIN.fill(gray)
+
+        # Title
+        title = text_format("Formula Invaders", font2, 77, black)
+        title_rect = title.get_rect()
+        WIN.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
+
+        startButton.draw(WIN)
+        quitButton.draw(WIN)
+
+    while menu:
+        redraw_window()
+        pygame.display.update()
+        pygame.display.set_caption("Start Menu")
+
+        for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if startButton.isOver(pos):
+                    driver_selection_menu()
+                if quitButton.isOver(pos):
+                    pygame.quit()
+                    quit()
+
+            if event.type == pygame.MOUSEMOTION:
+                if startButton.isOver(pos):
+                    startButton.textColor = white
+                else:
+                    startButton.textColor = black
+
+                if quitButton.isOver(pos):
+                    quitButton.textColor = white
+                else:
+                    quitButton.textColor = black
+
+
+# Main menu
+def driver_selection_menu():
     WIN.fill((64, 64, 64))
     run = True
     draw_text(' ', font, (255, 255, 255), WIN, 20, 20)
-
-
-
-
 
     # Lewis Hamilton
     lewisX = 50
@@ -331,15 +489,6 @@ def tire_menu():
                     game()
                 elif goBackButton.isOver(pos):
                     main_menu()
-                # if start_button is clicked go to main_menu()
-                elif start_button.isOver(pos):
-                    main_menu()
-
-
-
-
-
-
 
 
 # Credits menu
@@ -409,175 +558,6 @@ def tutorial_menu():
                 if goBackButton.isOver(pos):
                     # If the user clicks the back button
                     main_menu()
-
-
-# Loading images
-# Enemy Space Ships
-RED_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_red_small.png"))
-GREEN_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_green_small.png"))
-BLUE_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_blue_small.png"))
-# Lasers
-RED_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_red.png"))
-GREEN_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_green.png"))
-BLUE_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_blue.png"))
-YELLOW_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_yellow.png"))
-
-# Background
-BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")), (WIDTH, HEIGHT))
-
-
-# Lasers class
-class Laser:
-    # Initializion
-    def __init__(self, x, y, img):
-        self.x = x
-        self.y = y
-        self.img = img
-        self.mask = pygame.mask.from_surface(self.img)
-
-    # Draws the laser
-    def draw(self, window):
-        window.blit(self.img, (self.x, self.y))
-
-    # Moves the laser
-    def move(self, vel):
-        self.y += vel
-
-    # Checks if the laser is off screen
-    def off_screen(self, height):
-        return not (self.y <= height and self.y >= 0)
-
-    # Checks for collisions
-    def collision(self, obj):
-        return collide(self, obj)
-
-
-# Ship class
-class Ship:
-    # Shooting cooldown
-    COOLDOWN = 30
-
-    # Initialization
-    def __init__(self, x, y, health=100):
-        self.x = x
-        self.y = y
-        self.health = health
-        self.ship_img = None
-        self.laser_img = None
-        self.lasers = []
-        self.cool_down_counter = 0
-
-    # Draws the ship
-    def draw(self, window):
-        window.blit(self.ship_img, (self.x, self.y))
-        for laser in self.lasers:
-            laser.draw(window)
-
-    # Moves the laser and handles collisions
-    def move_lasers(self, vel, obj):
-        self.cooldown()
-        for laser in self.lasers:
-            laser.move(vel)
-            if laser.off_screen(HEIGHT):
-                self.lasers.remove(laser)
-            elif laser.collision(obj):
-                obj.health -= 10
-                self.lasers.remove(laser)
-
-    # Handles cooldown on lasers
-    def cooldown(self):
-        if self.cool_down_counter >= self.COOLDOWN:
-            self.cool_down_counter = 0
-        elif self.cool_down_counter > 0:
-            self.cool_down_counter += 1
-
-    # Handles shooting
-    def shoot(self):
-        if self.cool_down_counter == 0:
-            laser = Laser(self.x, self.y, self.laser_img)
-            self.lasers.append(laser)
-            self.cool_down_counter = 1
-
-    # Gets the width of the ship
-    def get_width(self):
-        return self.ship_img.get_width()
-
-    # Gets the height of the ship
-    def get_height(self):
-        return self.ship_img.get_height()
-
-
-# User player class
-class Player(Ship):
-
-    # Initialization
-    def __init__(self, x, y, health=101):
-        super().__init__(x, y, health)
-        self.ship_img = F1_CAR
-        self.laser_img = playerLaser
-        self.mask = pygame.mask.from_surface(self.ship_img)
-        self.max_health = health
-
-    # Handles player shooting
-    def move_lasers(self, vel, objs):
-        self.cooldown()
-        for laser in self.lasers:
-            laser.move(vel)
-            if laser.off_screen(HEIGHT):
-                self.lasers.remove(laser)
-            else:
-                for obj in objs:
-                    if laser.collision(obj):
-                        objs.remove(obj)
-                        if laser in self.lasers:
-                            self.lasers.remove(laser)
-
-    # Draws the users ship and health bar
-    def draw(self, window):
-        super().draw(window)
-        self.healthbar(window)
-
-    # Handles the healthbar
-    def healthbar(self, window):
-        pygame.draw.rect(window, (255, 0, 0),
-                         (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width(), 10))
-        pygame.draw.rect(window, (0, 255, 0), (
-            self.x, self.y + self.ship_img.get_height() + 10,
-            self.ship_img.get_width() * (self.health / self.max_health),
-            10))
-
-
-# Enemey ships
-class Enemy(Ship):
-    COLOR_MAP = {
-        "red": (RED_SPACE_SHIP, RED_LASER),
-        "green": (GREEN_SPACE_SHIP, GREEN_LASER),
-        "blue": (BLUE_SPACE_SHIP, BLUE_LASER)
-    }
-
-    # Initializing
-    def __init__(self, x, y, color, health=100):
-        super().__init__(x, y, health)
-        self.ship_img, self.laser_img = self.COLOR_MAP[color]
-        self.mask = pygame.mask.from_surface(self.ship_img)
-
-    # Moves the enemy ships
-    def move(self, vel):
-        self.y += vel
-
-    # Has the enemy ships shoot
-    def shoot(self):
-        if self.cool_down_counter == 0:
-            laser = Laser(self.x - 20, self.y, self.laser_img)
-            self.lasers.append(laser)
-            self.cool_down_counter = 1
-
-
-# Checks for collisions
-def collide(obj1, obj2):
-    offset_x = obj2.x - obj1.x
-    offset_y = obj2.y - obj1.y
-    return obj1.mask.overlap(obj2.mask, (offset_x, offset_y)) != None
 
 
 # Main game functions
@@ -681,5 +661,5 @@ def game():
 
         player.move_lasers(-laser_vel, enemies)
 
-main1_menu()
+
 main_menu()
