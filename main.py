@@ -8,6 +8,103 @@ import random
 from pygame import display
 from pygame.locals import *
 
+# Center the Game Application
+
+
+os.environ['SDL_VIDEO_CENTERED'] = '1'
+
+
+
+#Text render
+
+
+def text_format(message, textFont, textSize, textColor):
+    newFont=pygame.font.Font(textFont, textSize)
+    newText=newFont.render(message, 0, textColor)
+
+    return newText
+
+
+
+# Colors
+white=(255, 255, 255)
+black=(0, 0, 0)
+gray=(50, 50, 50)
+red=(255, 0, 0)
+green=(0, 255, 0)
+blue=(0, 0, 255)
+yellow=(255, 255, 0)
+grey=(64, 64, 64)
+
+
+
+# Game Fonts
+font = "RetronoidItalic-8Xg2.ttf"
+font2 = "RetronoidItalic-8Xg2.ttf"
+
+
+
+
+# Main Menu
+# Main Menu
+# Main Menu
+def main1_menu():
+
+    menu=True
+    selected="start"
+
+    while menu:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_UP:
+                    selected="start"
+                elif event.key==pygame.K_DOWN:
+                    selected="quit"
+                if event.key==pygame.K_RETURN:
+                    if selected=="start":
+                        main_menu()
+                    if selected=="quit":
+                        pygame.quit()
+                        quit()
+
+        # Main Menu UI
+        WIN.fill(grey)
+        title=text_format("Formula Invaders", font2, 77, black)
+        if selected=="start":
+            text_start=text_format("START", font2, 60, white)
+        else:
+            text_start = text_format("START", font2, 60, black)
+        if selected=="quit":
+            text_quit=text_format("QUIT", font2, 60, white)
+        else:
+            text_quit = text_format("QUIT", font2, 60, black)
+
+        title_rect=title.get_rect()
+        start_rect=text_start.get_rect()
+        quit_rect=text_quit.get_rect()
+
+
+
+
+
+        #If the user clicks the start button it takes them to main_menu()
+        if start_rect.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0]:
+                main_menu()
+
+
+
+
+        # Main Menu Text
+        WIN.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
+        WIN.blit(text_start, (WIDTH / 2 - (start_rect[2] / 2), 300))
+        WIN.blit(text_quit, (WIDTH / 2 - (quit_rect[2] / 2), 360))
+        pygame.display.update()
+        pygame.display.set_caption("Start Menu")
+
 # Initializing
 mainClock = pygame.time.Clock()
 pygame.init()
@@ -70,15 +167,19 @@ def draw_text(text, font, color, surface, x, y):
 
 # Main menu
 def main_menu():
-    WIN.fill((0, 0, 0))
+    WIN.fill((64, 64, 64))
     run = True
-    draw_text('Main Menu', font, (255, 255, 255), WIN, 20, 20)
+    draw_text(' ', font, (255, 255, 255), WIN, 20, 20)
+
+
+
+
 
     # Lewis Hamilton
     lewisX = 50
     lewisY = 50
-    lewisButton = button((255, 0, 0), lewisX, lewisY, 100, 100)
-    lewisButton.draw(WIN, (255, 255, 255))
+    lewisButton = button((64, 64, 64), lewisX, lewisY, 100, 100)
+    lewisButton.draw(WIN, (64, 64, 64))
     lewisPunk = pygame.image.load(os.path.join("FinalAssets", "LewisPUNK.png"))
     lewisPunk = pygame.transform.scale(lewisPunk, (100, 100))
     WIN.blit(lewisPunk, (lewisX, lewisY))
@@ -86,8 +187,8 @@ def main_menu():
     # Max Verstappen
     verstappenX = 50
     verstappenY = lewisY + 150
-    verstappenButton = button((255, 0, 0), verstappenX, verstappenY, 100, 100)
-    verstappenButton.draw(WIN, (255, 255, 255))
+    verstappenButton = button((64, 64, 64), verstappenX, verstappenY, 100, 100)
+    verstappenButton.draw(WIN, (64, 64, 64))
     verstappenPunk = pygame.image.load(os.path.join("FinalAssets", "VerstappenPUNK.png"))
     verstappenPunk = pygame.transform.scale(verstappenPunk, (100, 100))
     WIN.blit(verstappenPunk, (verstappenX, verstappenY))
@@ -95,8 +196,8 @@ def main_menu():
     # Charles Leclerc
     leclercX = 50
     leclercY = verstappenY + 150
-    leclercButton = button((255, 0, 0), leclercX, leclercY, 100, 100)
-    leclercButton.draw(WIN, (255, 255, 255))
+    leclercButton = button((64, 64, 64), leclercX, leclercY, 100, 100)
+    leclercButton.draw(WIN, (64, 64, 64))
     leclercPunk = pygame.image.load(os.path.join("FinalAssets", "LeclercPUNK.png"))
     leclercPunk = pygame.transform.scale(leclercPunk, (100, 100))
     WIN.blit(leclercPunk, (leclercX, leclercY))
@@ -104,8 +205,8 @@ def main_menu():
     # Tatiana Calderon
     calderonX = lewisX + 150
     calderonY = lewisY
-    calderonButton = button((255, 0, 0), calderonX, calderonY, 100, 100)
-    calderonButton.draw(WIN, (255, 255, 255))
+    calderonButton = button((64, 64, 64), calderonX, calderonY, 100, 100)
+    calderonButton.draw(WIN, (64, 64, 64))
     calderonPunk = pygame.image.load(os.path.join("FinalAssets", "CalederonPUNK.png"))
     calderonPunk = pygame.transform.scale(calderonPunk, (100, 100))
     WIN.blit(calderonPunk, (calderonX, calderonY))
@@ -113,8 +214,8 @@ def main_menu():
     # Lando Norris
     norrisX = calderonX
     norrisY = verstappenY
-    norrisButton = button((255, 0, 0), norrisX, norrisY, 100, 100)
-    norrisButton.draw(WIN, (255, 255, 255))
+    norrisButton = button((64, 64, 64), norrisX, norrisY, 100, 100)
+    norrisButton.draw(WIN, (64, 64, 64))
     norrisPunk = pygame.image.load(os.path.join("FinalAssets", "NorrisPUNK.png"))
     norrisPunk = pygame.transform.scale(norrisPunk, (100, 100))
     WIN.blit(norrisPunk, (norrisX, norrisY))
@@ -182,20 +283,20 @@ def tire_menu():
     WIN.fill((0, 0, 0))
 
     # Back button
-    goBackButton = button((255, 0, 0), WIDTH - 150, 50, 100, 50, "Back")
-    goBackButton.draw(WIN, (255, 255, 255))
+    goBackButton = button((255, 255, 255), WIDTH - 150, 50, 100, 50, "Back")
+    goBackButton.draw(WIN, (0, 0, 0))
 
     # Soft Tires
-    softChoice = button((255, 0, 0), 50, 50, 100, 100, "Soft Tires")
-    softChoice.draw(WIN, (255, 255, 255))
+    softChoice = button((255, 255, 255), 50, 50, 100, 100, "Soft Tires")
+    softChoice.draw(WIN, (0, 0, 0))
 
     # Medium Tires
-    medChoice = button((255, 0, 0), 200, 50, 100, 100, "Medium Tires")
-    medChoice.draw(WIN, (255, 255, 255))
+    medChoice = button((255, 255, 255), 200, 50, 100, 100, "Medium Tires")
+    medChoice.draw(WIN, (0, 0, 0))
 
     # Hard Tires
-    hardChoice = button((255, 0, 0), 350, 50, 100, 100, "Hard Tires")
-    hardChoice.draw(WIN, (255, 255, 255))
+    hardChoice = button((255, 255, 255), 350, 50, 100, 100, "Hard Tires")
+    hardChoice.draw(WIN, (0, 0, 0))
 
     # Event runner
     while run:
@@ -230,6 +331,15 @@ def tire_menu():
                     game()
                 elif goBackButton.isOver(pos):
                     main_menu()
+                # if start_button is clicked go to main_menu()
+                elif start_button.isOver(pos):
+                    main_menu()
+
+
+
+
+
+
 
 
 # Credits menu
@@ -571,5 +681,5 @@ def game():
 
         player.move_lasers(-laser_vel, enemies)
 
-
+main1_menu()
 main_menu()
