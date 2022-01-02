@@ -761,7 +761,7 @@ def game():
 
         if lost:
 
-            lost_label = lost_font.render("The Aliens Have Captured You!", 1, (255, 255, 255))
+            lost_label = lost_font.render("The Aliens Have Destroyed You!", 1, (255, 255, 255))
 
             WIN.blit(lost_label, (WIDTH / 2 - lost_label.get_width() / 2, 350))
 
