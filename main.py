@@ -7,6 +7,16 @@ import time
 import random
 from pygame import display
 from pygame.locals import *
+pygame.init()
+
+Laser_Sound = pygame.mixer.Sound("Beep.mp3")
+Button_Press = pygame.mixer.Sound("FunkyBeep.mp3")
+
+pygame.mixer.music.load("Space_Music.mp3")
+
+
+
+
 
 # Center the Game Application
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -48,6 +58,7 @@ pygame.display.set_caption("F1 Invaders")
 pygame.font.init()
 font = pygame.font.SysFont('Corbel', 15)
 
+
 # Loading images
 # Enemy Space Ships
 UFO_1 = pygame.image.load(os.path.join("FinalAssets", "UFO.png"))
@@ -59,7 +70,7 @@ SHOOT_OBJ2 = pygame.image.load(os.path.join("FinalAssets", "MedTire.png"))
 SHOOT_OBJ3 = pygame.image.load(os.path.join("FinalAssets", "HardTyres.png"))
 
 # Background
-BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")), (WIDTH, HEIGHT))
+BG = pygame.transform.scale(pygame.image.load(os.path.join("FinalAssets", "background-black.png")), (WIDTH, HEIGHT))
 
 
 # Checks for collisions
@@ -116,6 +127,12 @@ class button():
         if pos[0] > self.x and pos[0] < self.x + self.width:
             if pos[1] > self.y and pos[1] < self.y + self.height:
                 return True
+            # Button sound efefct when mouse is over the button
+
+            Button_Press.stop()
+
+            Button_Press.play()
+
 
         return False
 
@@ -214,6 +231,7 @@ class Player(Ship):
 
     # Handles player shooting
     def move_lasers(self, vel, objs):
+
         self.cooldown()
         for laser in self.lasers:
             laser.move(vel)
@@ -225,6 +243,14 @@ class Player(Ship):
                         objs.remove(obj)
                         if laser in self.lasers:
                             self.lasers.remove(laser)
+
+    # Handles player movement
+  #  def move_ship(self, direction):
+   #     if direction == "RIGHT":
+     #       self.x += 5
+      #  if direction == "LEFT":
+      #      self.x -= 5
+
 
     # Draws the users ship and health bar
     def draw(self, window):
@@ -247,8 +273,6 @@ class Enemy(Ship):
         "red": (UFO_1, SHOOT_OBJ1),
         "green": (UFO_2, SHOOT_OBJ2),
         "blue": (UFO_3, SHOOT_OBJ3)
-
-
     }
 
     # Initializing
@@ -264,7 +288,7 @@ class Enemy(Ship):
     # Has the enemy ships shoot
     def shoot(self):
         if self.cool_down_counter == 0:
-            laser = Laser(self.x - 20, self.y, self.laser_img)
+            laser = Laser(self.x + 17, self.y, self.laser_img)
             self.lasers.append(laser)
             self.cool_down_counter = 1
 
@@ -358,6 +382,7 @@ def driver_selection_menu():
     lewisY = 50
     lewisButton = button((64, 64, 64), lewisX, lewisY, 100, 100)
 
+
     # Max Verstappen
     verstappenX = 50
     verstappenY = lewisY + 150
@@ -390,6 +415,8 @@ def driver_selection_menu():
         lewisPunk = pygame.image.load(os.path.join("FinalAssets", "LewisPUNK.png"))
         lewisPunk = pygame.transform.scale(lewisPunk, (100, 100))
         WIN.blit(lewisPunk, (lewisX, lewisY))
+
+
 
         # Max Verstappen
         verstappenButton.draw(WIN, (64, 64, 64))
@@ -439,6 +466,7 @@ def driver_selection_menu():
             # Handles button clicks
             global F1_CAR
             if event.type == pygame.MOUSEBUTTONDOWN:
+
                 if lewisButton.isOver(pos):
                     # If the user clicks Hamilton
                     F1_CAR = pygame.image.load(os.path.join("FinalAssets", "HamiltonCar.png"))
@@ -475,9 +503,16 @@ def tire_menu():
     draw_text('Tire Selection Menu', font, (255, 255, 255), WIN, 20, 20)
 
     backButton = button(grey, WIDTH - 150, 50, 150, 50, "Back", black, 2)
-    softChoice = button(grey, 50, 50, 150, 100, "Soft Tires", black, 2)
-    medChoice = button(grey, 250, 50, 150, 100, "Medium Tires", black, 2)
-    hardChoice = button(grey, 450, 50, 150, 100, "Hard Tires", black, 2)
+    softChoice = button(grey, 50, 400, 150, 100, "Soft Tires", black, 2)
+    medChoice = button(grey, 250, 400, 150, 100, "Medium Tires", black, 2)
+    hardChoice = button(grey, 450, 400, 150, 100, "Hard Tires", black, 2)
+
+    # Tires
+    softTireMenu = pygame.image.load(os.path.join("FinalAssets", "SoftTireMenu.png"))
+    medTireMenu = pygame.image.load(os.path.join("FinalAssets", "MedTireMenu.png"))
+    hardTireMenu = pygame.image.load(os.path.join("FinalAssets", "HardTireMenu.png"))
+
+
 
     def redraw_window():
         WIN.fill(grey)
@@ -485,6 +520,11 @@ def tire_menu():
         softChoice.draw(WIN)
         medChoice.draw(WIN)
         hardChoice.draw(WIN)
+
+        # Tires
+        WIN.blit(softTireMenu, (75, 125))
+        WIN.blit(medTireMenu, (275, 125))
+        WIN.blit(hardTireMenu, (475, 125))
 
     # Event runner
     while run:
@@ -506,18 +546,27 @@ def tire_menu():
 
             # Handles the button clicks
             global playerLaser
+            global waveIncrement
+            global laser_vel
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if softChoice.isOver(pos):
                     # If the user chooses soft tires
                     playerLaser = pygame.image.load(os.path.join("FinalAssets", "SoftTyre.png"))
+                    waveIncrement = 3
+                    laser_vel = 5
                     game()
+
                 elif medChoice.isOver(pos):
                     # If the users chooses medium tires
                     playerLaser = pygame.image.load(os.path.join("FinalAssets", "MedTire.png"))
+                    waveIncrement = 5
+                    laser_vel = 5
                     game()
                 elif hardChoice.isOver(pos):
                     # If the user chooses hard tires
                     playerLaser = playerLaser = pygame.image.load(os.path.join("FinalAssets", "HardTyres.png"))
+                    waveIncrement = 7
+                    laser_vel = 3
                     game()
                 elif backButton.isOver(pos):
                     driver_selection_menu()
@@ -525,21 +574,39 @@ def tire_menu():
             if event.type == pygame.MOUSEMOTION:
                 if backButton.isOver(pos):
                     backButton.textColor = white
+                    Button_Press.stop()
+                    Button_Press.play()
+                    Button_Press.stop()
+                    Button_Press.stop()
+
                 else:
                     backButton.textColor = black
 
                 if softChoice.isOver(pos):
                     softChoice.textColor = white
+                    Button_Press.stop()
+                    Button_Press.play()
+                    Button_Press.stop()
+                    Button_Press.stop()
                 else:
                     softChoice.textColor = black
 
                 if medChoice.isOver(pos):
                     medChoice.textColor = white
+                    Button_Press.stop()
+                    Button_Press.play()
+                    Button_Press.stop()
+                    Button_Press.stop()
                 else:
                     medChoice.textColor = black
 
                 if hardChoice.isOver(pos):
                     hardChoice.textColor = white
+                    Button_Press.stop()
+                    Button_Press.play()
+                    Button_Press.stop()
+                    Button_Press.stop()
+
                 else:
                     hardChoice.textColor = black
 
@@ -580,10 +647,16 @@ def credit_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if backButton.isOver(pos):
                     # If the user clicks the back button
+
                     main_menu()
             if event.type == pygame.MOUSEMOTION:
                 if backButton.isOver(pos):
                     backButton.textColor = white
+                    Button_Press.stop()
+
+                    Button_Press.play()
+                    Button_Press.stop()
+                    Button_Press.stop()
                 else:
                     backButton.textColor = black
 
@@ -599,11 +672,11 @@ def tutorial_menu():
         WIN.fill(grey)
         backButton.draw(WIN)
 
-        line1 = textFont.render('insert text here', True, black)
-        line2 = textFont.render('insert text here', True, black)
-        line3 = textFont.render('insert text here', True, black)
-        line4 = textFont.render('insert text here', True, black)
-        line5 = textFont.render('insert text here', True, black)
+        line1 = textFont.render('Move with "WASD"', True, black)
+        line2 = textFont.render('Shoot with "SpaceBar"', True, black)
+        line3 = textFont.render('You lose lives if you let UFOs pass you', True, black)
+        line4 = textFont.render('Do not get hit with tires', True, black)
+        line5 = textFont.render('Keep on going', True, black)
 
         x = 10
         y = 10
@@ -661,9 +734,8 @@ def game():
     enemies = []
     wave_length = 5
     enemy_vel = 1
-
+    enemy_laser_vel = 5
     player_vel = 5
-    laser_vel = 5
 
     player = Player(300, 630)
 
@@ -688,6 +760,7 @@ def game():
         player.draw(WIN)
 
         if lost:
+
             lost_label = lost_font.render("You Lost!!", 1, (255, 255, 255))
             WIN.blit(lost_label, (WIDTH / 2 - lost_label.get_width() / 2, 350))
 
@@ -710,7 +783,7 @@ def game():
 
         if len(enemies) == 0:
             level += 1
-            wave_length += 5
+            wave_length += waveIncrement
             for i in range(wave_length):
                 enemy = Enemy(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100),
                               random.choice(["red", "blue", "green"]))
@@ -733,10 +806,24 @@ def game():
         if keys[pygame.K_SPACE]:
             player.shoot()
 
+            Laser_Sound.stop()
+            # play the laser sound
+            Laser_Sound.play()
+
+
+
+
+
+
+
+
+
+
+
         # Handles the enemies
         for enemy in enemies[:]:
             enemy.move(enemy_vel)
-            enemy.move_lasers(laser_vel, player)
+            enemy.move_lasers(enemy_laser_vel, player)
 
             if random.randrange(0, 2 * 60) == 1:
                 enemy.shoot()
@@ -749,6 +836,8 @@ def game():
                 enemies.remove(enemy)
 
         player.move_lasers(-laser_vel, enemies)
+
+
 
 
 main_menu()
