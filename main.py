@@ -7,16 +7,10 @@ import time
 import random
 from pygame import display
 from pygame.locals import *
+
 pygame.init()
 
-Laser_Sound = pygame.mixer.Sound("Beep.mp3")
-Button_Press = pygame.mixer.Sound("FunkyBeep.mp3")
-
-pygame.mixer.music.load("Space_Music.mp3")
-
-
-
-
+Laser_Sound = pygame.mixer.Sound(os.path.join("FinalAssets", "Beep.mp3"))
 
 # Center the Game Application
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -24,7 +18,7 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 # Colors
 white = (255, 255, 255)
 black = (0, 0, 0)
-gray = (50, 50, 50)
+gray = (64, 64, 64)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
@@ -32,8 +26,8 @@ yellow = (255, 255, 0)
 grey = (64, 64, 64)
 
 # Game Fonts
-font = "RetronoidItalic-8Xg2.ttf"
-font2 = "RetronoidItalic-8Xg2.ttf"
+font = os.path.join("FinalAssets", "RetronoidItalic-8Xg2.ttf")
+font2 = os.path.join("FinalAssets", "RetronoidItalic-8Xg2.ttf")
 
 
 # Text render
@@ -56,8 +50,6 @@ pygame.display.set_caption("F1 Invaders")
 
 # Text Initialization
 pygame.font.init()
-font = pygame.font.SysFont('Corbel', 15)
-
 
 # Loading images
 # Enemy Space Ships
@@ -71,6 +63,10 @@ SHOOT_OBJ3 = pygame.image.load(os.path.join("FinalAssets", "HardTyres.png"))
 
 # Background
 BG = pygame.transform.scale(pygame.image.load(os.path.join("FinalAssets", "background-black.png")), (WIDTH, HEIGHT))
+
+# Setting the score to 0
+global score
+score = 0
 
 
 # Checks for collisions
@@ -127,13 +123,6 @@ class button():
         if pos[0] > self.x and pos[0] < self.x + self.width:
             if pos[1] > self.y and pos[1] < self.y + self.height:
                 return True
-            # Button sound efefct when mouse is over the button
-
-            Button_Press.stop()
-
-            Button_Press.play()
-
-
         return False
 
 
@@ -228,10 +217,10 @@ class Player(Ship):
         self.laser_img = playerLaser
         self.mask = pygame.mask.from_surface(self.ship_img)
         self.max_health = health
+        self.score = 0
 
     # Handles player shooting
     def move_lasers(self, vel, objs):
-
         self.cooldown()
         for laser in self.lasers:
             laser.move(vel)
@@ -241,16 +230,9 @@ class Player(Ship):
                 for obj in objs:
                     if laser.collision(obj):
                         objs.remove(obj)
+                        self.score += 10
                         if laser in self.lasers:
                             self.lasers.remove(laser)
-
-    # Handles player movement
-  #  def move_ship(self, direction):
-   #     if direction == "RIGHT":
-     #       self.x += 5
-      #  if direction == "LEFT":
-      #      self.x -= 5
-
 
     # Draws the users ship and health bar
     def draw(self, window):
@@ -265,6 +247,9 @@ class Player(Ship):
             self.x, self.y + self.ship_img.get_height() + 10,
             self.ship_img.get_width() * (self.health / self.max_health),
             10))
+
+    def retrunScore(self):
+        return self.score
 
 
 # Enemey ships
@@ -375,75 +360,106 @@ def main_menu():
 
 # Main menu
 def driver_selection_menu():
+    driverFont = os.path.join("FinalAssets", "Comic Sans MS.ttf")
+    driverFontSize = 12
+    driverFontColour = black
+
     run = True
+
+    # Button and text Y coord
+    buttonY = 300
+    textY = buttonY + 110
 
     # Lewis Hamilton
     lewisX = 330
-    lewisY = 300
-    lewisButton = button((64, 64, 64), lewisX, lewisY, 100, 100)
-
+    lewisButton = button((64, 64, 64), lewisX, buttonY, 100, 100)
+    lewisText = text_format("Lewis Hamilton", driverFont, driverFontSize, driverFontColour)
 
     # Max Verstappen
     verstappenX = 130
-    verstappenY = 300
-    verstappenButton = button((64, 64, 64), verstappenX, verstappenY, 100, 100)
+    verstappenButton = button((64, 64, 64), verstappenX, buttonY, 100, 100)
+    verstappenText = text_format("Max Verstappen", driverFont, driverFontSize, driverFontColour)
 
     # Charles Leclerc
     leclercX = 230
-    leclercY = 300
-    leclercButton = button((64, 64, 64), leclercX, leclercY, 100, 100)
+    leclercButton = button((64, 64, 64), leclercX, buttonY, 100, 100)
+    leclercText = text_format("Charles Leclerc", driverFont, driverFontSize, driverFontColour)
 
     # Tatiana Calderon
     calderonX = 430
-    calderonY = 300
-    calderonButton = button((64, 64, 64), calderonX, calderonY, 100, 100)
+    calderonButton = button((64, 64, 64), calderonX, buttonY, 100, 100)
+    calderonText = text_format("Tatiana Calderon", driverFont, driverFontSize, driverFontColour)
 
     # Lando Norris
     norrisX = 530
-    norrisY = 300
-    norrisButton = button((64, 64, 64), norrisX, norrisY, 100, 100)
+    norrisButton = button((64, 64, 64), norrisX, buttonY, 100, 100)
+    norrisText = text_format("Lando Norris", driverFont, driverFontSize, driverFontColour)
 
     # Back Button
     backButton = button(grey, WIDTH - 150, 50, 100, 50, "BACK", black, 2)
 
+    # Menu Title
+    menuTitleSize = 40
+    menuTitle = text_format("Select your driver", font2, menuTitleSize, driverFontColour)
+    menuTitleX = WIDTH / 2 - menuTitle.get_width() / 2
+    menuTitleY = 200
+
+    # Instructions
+    instructionFont = os.path.join("FinalAssets", "Comic Sans MS Bold.ttf")
+    instructionSize = 15
+    instrcutionColour = black
+    instructionX = 20
+    instructionY = 600
+
+    instructionText = text_format("Has no effect on the game mechanics", instructionFont, instructionSize,
+                                  instrcutionColour)
+
     def redraw_window():
         WIN.fill(grey)
-        draw_text(' ', font, (255, 255, 255), WIN, 20, 20)
 
         # Lewis Hamilton
         lewisButton.draw(WIN, (64, 64, 64))
         lewisPunk = pygame.image.load(os.path.join("FinalAssets", "LewisPUNK.png"))
         lewisPunk = pygame.transform.scale(lewisPunk, (100, 100))
-        WIN.blit(lewisPunk, (lewisX, lewisY))
-
-
+        WIN.blit(lewisPunk, (lewisX, buttonY))
+        WIN.blit(lewisText, (lewisX, textY))
 
         # Max Verstappen
         verstappenButton.draw(WIN, (64, 64, 64))
         verstappenPunk = pygame.image.load(os.path.join("FinalAssets", "VerstappenPUNK.png"))
         verstappenPunk = pygame.transform.scale(verstappenPunk, (100, 100))
-        WIN.blit(verstappenPunk, (verstappenX, verstappenY))
+        WIN.blit(verstappenPunk, (verstappenX, buttonY))
+        WIN.blit(verstappenText, (verstappenX, textY))
 
         # Charles Leclerc
         leclercButton.draw(WIN, (64, 64, 64))
         leclercPunk = pygame.image.load(os.path.join("FinalAssets", "LeclercPUNK.png"))
         leclercPunk = pygame.transform.scale(leclercPunk, (100, 100))
-        WIN.blit(leclercPunk, (leclercX, leclercY))
+        WIN.blit(leclercPunk, (leclercX, buttonY))
+        WIN.blit(leclercText, (leclercX, textY))
 
         # Tatiana Calderon
         calderonButton.draw(WIN, (64, 64, 64))
         calderonPunk = pygame.image.load(os.path.join("FinalAssets", "CalederonPUNK.png"))
         calderonPunk = pygame.transform.scale(calderonPunk, (100, 100))
-        WIN.blit(calderonPunk, (calderonX, calderonY))
+        WIN.blit(calderonPunk, (calderonX, buttonY))
+        WIN.blit(calderonText, (calderonX, textY))
 
         # Lando Norris
         norrisButton.draw(WIN, (64, 64, 64))
         norrisPunk = pygame.image.load(os.path.join("FinalAssets", "NorrisPUNK.png"))
         norrisPunk = pygame.transform.scale(norrisPunk, (100, 100))
-        WIN.blit(norrisPunk, (norrisX, norrisY))
+        WIN.blit(norrisPunk, (norrisX, buttonY))
+        WIN.blit(norrisText, (norrisX + 15, textY))
 
         # Back Button
         backButton.draw(WIN)
+
+        # Menu Title
+        WIN.blit(menuTitle, (menuTitleX, menuTitleY))
+
+        # Instructions Text
+        WIN.blit(instructionText, (instructionX, instructionY))
 
     # Event runner
     while run:
@@ -496,23 +512,79 @@ def driver_selection_menu():
                 else:
                     backButton.textColor = black
 
+                if lewisButton.isOver(pos):
+                    lewisText = text_format("Lewis Hamilton", driverFont, driverFontSize, white)
+                else:
+                    lewisText = text_format("Lewis Hamilton", driverFont, driverFontSize, driverFontColour)
+
+                if verstappenButton.isOver(pos):
+                    verstappenText = text_format("Max Verstappen", driverFont, driverFontSize, white)
+                else:
+                    verstappenText = text_format("Max Verstappen", driverFont, driverFontSize, driverFontColour)
+
+                if leclercButton.isOver(pos):
+                    leclercText = text_format("Charles Leclerc", driverFont, driverFontSize, white)
+                else:
+                    leclercText = text_format("Charles Leclerc", driverFont, driverFontSize, driverFontColour)
+
+                if calderonButton.isOver(pos):
+                    calderonText = text_format("Tatiana Calderon", driverFont, driverFontSize, white)
+                else:
+                    calderonText = text_format("Tatiana Calderon", driverFont, driverFontSize, driverFontColour)
+
+                if norrisButton.isOver(pos):
+                    norrisText = text_format("Lando Norris", driverFont, driverFontSize, white)
+                else:
+                    norrisText = text_format("Lando Norris", driverFont, driverFontSize, driverFontColour)
+
 
 # Tire menu
 def tire_menu():
     run = True
-    draw_text('Tire Selection Menu', font, (255, 255, 255), WIN, 20, 20)
+
+    # Buttons Y Coordinates
+    tireButtonWidth = 145
+    tireButtonHeigth = 30
+    tireButtonY = HEIGHT / 2 - tireButtonHeigth / 2
+
+    # Buttons X Coordinates
+    medChoiceX = WIDTH / 2 - tireButtonWidth / 2
+    softChoiceX = medChoiceX - 200
+    hardChoiceX = medChoiceX + 200
 
     backButton = button(grey, WIDTH - 150, 50, 150, 50, "Back", black, 2)
-    softChoice = button(grey, 50, 400, 150, 100, "Soft Tires", black, 2)
-    medChoice = button(grey, 250, 400, 150, 100, "Medium Tires", black, 2)
-    hardChoice = button(grey, 450, 400, 150, 100, "Hard Tires", black, 2)
+    softChoice = button(grey, softChoiceX, tireButtonY, tireButtonWidth, tireButtonHeigth, "Soft Tires", black, 2)
+    medChoice = button(grey, medChoiceX, tireButtonY, tireButtonWidth, tireButtonHeigth, "Medium Tires", black, 2)
+    hardChoice = button(grey, hardChoiceX, tireButtonY, tireButtonWidth, tireButtonHeigth, "Hard Tires", black, 2)
 
     # Tires
     softTireMenu = pygame.image.load(os.path.join("FinalAssets", "SoftTireMenu.png"))
     medTireMenu = pygame.image.load(os.path.join("FinalAssets", "MedTireMenu.png"))
     hardTireMenu = pygame.image.load(os.path.join("FinalAssets", "HardTireMenu.png"))
 
+    # Menu Title
+    menuTitleSize = 40
+    menuTitle = text_format("Select your tires", font2, menuTitleSize, black)
+    menuTitleX = WIDTH / 2 - menuTitle.get_width() / 2
+    menuTitleY = 200
 
+    # Instructions
+    instructionFont = os.path.join("FinalAssets", "Comic Sans MS Bold.ttf")
+    instructionSize = 15
+    instrcutionColour = black
+    instructionX = 20
+    instructionY = 600
+
+    instructionTextLine1 = text_format("Depending on the tire you choose, the game difficulty chanegs as follows: ",
+                                       instructionFont, instructionSize, instrcutionColour)
+    instructionTextLine2 = text_format("Soft Tires: The easiest, has a reduced number of enemies per wave",
+                                       instructionFont, instructionSize, instrcutionColour)
+    instructionTextLine3 = text_format("Medium Tire: Standard diffuculty", instructionFont, instructionSize,
+                                       instrcutionColour)
+    instructionTextLine4 = text_format("Hard Tires: The hardest, with more enemy per waves and also a slower tire",
+                                       instructionFont, instructionSize, instrcutionColour)
+
+    instructionTxtHeigth = instructionTextLine1.get_height()
 
     def redraw_window():
         WIN.fill(grey)
@@ -522,9 +594,19 @@ def tire_menu():
         hardChoice.draw(WIN)
 
         # Tires
-        WIN.blit(softTireMenu, (75, 125))
-        WIN.blit(medTireMenu, (275, 125))
-        WIN.blit(hardTireMenu, (475, 125))
+        offset = 20
+        WIN.blit(softTireMenu, (softChoiceX + offset, tireButtonY + tireButtonHeigth))
+        WIN.blit(medTireMenu, (medChoiceX + offset, tireButtonY + tireButtonHeigth))
+        WIN.blit(hardTireMenu, (hardChoiceX + offset, tireButtonY + tireButtonHeigth))
+
+        # Menu Title
+        WIN.blit(menuTitle, (menuTitleX, menuTitleY))
+
+        # Instructions
+        WIN.blit(instructionTextLine1, (instructionX, instructionY))
+        WIN.blit(instructionTextLine2, (instructionX, instructionY + instructionTxtHeigth))
+        WIN.blit(instructionTextLine3, (instructionX, instructionY + instructionTxtHeigth * 2))
+        WIN.blit(instructionTextLine4, (instructionX, instructionY + instructionTxtHeigth * 3))
 
     # Event runner
     while run:
@@ -574,44 +656,23 @@ def tire_menu():
             if event.type == pygame.MOUSEMOTION:
                 if backButton.isOver(pos):
                     backButton.textColor = white
-                    Button_Press.stop()
-                    Button_Press.play()
-                    Button_Press.stop()
-                    Button_Press.stop()
-
                 else:
                     backButton.textColor = black
 
                 if softChoice.isOver(pos):
                     softChoice.textColor = white
-                    Button_Press.stop()
-                    Button_Press.play()
-                    Button_Press.stop()
-                    Button_Press.stop()
                 else:
                     softChoice.textColor = black
 
                 if medChoice.isOver(pos):
                     medChoice.textColor = white
-                    Button_Press.stop()
-                    Button_Press.play()
-                    Button_Press.stop()
-                    Button_Press.stop()
                 else:
                     medChoice.textColor = black
 
                 if hardChoice.isOver(pos):
                     hardChoice.textColor = white
-                    Button_Press.stop()
-                    Button_Press.play()
-                    Button_Press.stop()
-                    Button_Press.stop()
-
                 else:
                     hardChoice.textColor = black
-
-
-textFont = pygame.font.Font(font2, 30)
 
 
 # Credits menu
@@ -625,11 +686,34 @@ def credit_menu():
         WIN.fill(grey)
         backButton.draw(WIN)
 
+        # Title
+        title = text_format("Formula Invaders", font2, 77, black)
+        title_rect = title.get_rect()
+        WIN.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
+
+        # Text
+        textFont = pygame.font.Font(os.path.join("FinalAssets", "RetronoidItalic-8Xg2.ttf"), 30)
+        line1 = textFont.render('Game Developers: Aditya and Musa ', True, white)
+        line2 = textFont.render('Artwork: Arsh and Aditya ', True, white)
+        line3 = textFont.render('Website: Kaleb ', True, white)
+
+        x = 130
+        y = 300
+        x2 = 130
+        y2 = 350
+        x3 = 130
+        y3 = 400
+
+        incrimeant = 20
+        WIN.blit(line1, (x, y))
+        WIN.blit(line2, (x2, y2))
+        WIN.blit(line3, (x3, y3))
+
     # Event runner
     while run:
         # Updating the display
         redraw_window()
-        pygame.display.set_caption("Tire Selection Menu")
+        pygame.display.set_caption("Credits Menu")
         pygame.display.update()
 
         # Checks for events
@@ -652,11 +736,6 @@ def credit_menu():
             if event.type == pygame.MOUSEMOTION:
                 if backButton.isOver(pos):
                     backButton.textColor = white
-                    Button_Press.stop()
-
-                    Button_Press.play()
-                    Button_Press.stop()
-                    Button_Press.stop()
                 else:
                     backButton.textColor = black
 
@@ -672,15 +751,25 @@ def tutorial_menu():
         WIN.fill(grey)
         backButton.draw(WIN)
 
-        line1 = textFont.render('Move with "WASD"', True, black)
-        line2 = textFont.render('Shoot with "SpaceBar"', True, black)
-        line3 = textFont.render('You lose lives if you let UFOs pass you', True, black)
-        line4 = textFont.render('Do not get hit with tires', True, black)
-        line5 = textFont.render('Keep on going', True, black)
+        # Title
+        title = text_format("Formula Invaders", font2, 77, black)
+        title_rect = title.get_rect()
+        WIN.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
 
-        x = 10
-        y = 10
-        incrimeant = 35
+        textFont = pygame.font.Font(os.path.join("FinalAssets", "Comic Sans MS Bold.ttf"), 19)
+
+
+        line1 = textFont.render('Move with "WASD"', True, black)
+        line2 = textFont.render('Shoot with the spacebar', True, black)
+        line3 = textFont.render('You lose lives if you let UFOs touch the ground', True, black)
+        line4 = textFont.render("Do not get hit with tires or UFO's or you'll lose health", True, black)
+        line5 = textFont.render("Keep on going for as long as you can and try to beat your old score", True, black)
+        line6 = textFont.render("You get 10 points for killing each UFO, and 30 points for passing each level", True,
+                                black)
+        line6 = textFont.render("Your score will only be displayed at the end of the game", True, black)
+        x = 80
+        y = 250
+        incrimeant = 25
 
         WIN.blit(line1, (x, y))
         y += incrimeant
@@ -691,12 +780,14 @@ def tutorial_menu():
         WIN.blit(line4, (x, y))
         y += incrimeant
         WIN.blit(line5, (x, y))
+        y += incrimeant
+        WIN.blit(line6, (x, y))
 
     # Event runner
     while run:
         # Updating the display
         redraw_window()
-        pygame.display.set_caption("Tire Selection Menu")
+        pygame.display.set_caption("Tutorial Menu")
         pygame.display.update()
 
         # Checks for events
@@ -736,6 +827,8 @@ def game():
     enemy_vel = 1
     enemy_laser_vel = 5
     player_vel = 5
+    waveScore = 0
+    finalScore = 0
 
     player = Player(300, 630)
 
@@ -748,8 +841,8 @@ def game():
     def redraw_window():
         WIN.blit(BG, (0, 0))
         # draw text
-        lives_label = main_font.render(f"Lives: {lives}", 1, (255, 255, 255))
-        level_label = main_font.render(f"Level: {level}", 1, (255, 255, 255))
+        lives_label = main_font.render(f"Lives: {lives}", 1, white)
+        level_label = main_font.render(f"Level: {level}", 1, white)
 
         WIN.blit(lives_label, (10, 10))
         WIN.blit(level_label, (WIDTH - level_label.get_width() - 10, 10))
@@ -760,18 +853,17 @@ def game():
         player.draw(WIN)
 
         if lost:
-
-            lost_label = lost_font.render("The Aliens Have Destroyed You!", 1, (255, 255, 255))
+            finalScore = player.retrunScore() + waveScore
+            lost_label = lost_font.render(f"Your Score: {finalScore}!", 1, white)
 
             WIN.blit(lost_label, (WIDTH / 2 - lost_label.get_width() / 2, 350))
-
         pygame.display.update()
 
     # Event runner
     while run:
         clock.tick(FPS)
         redraw_window()
-
+        pygame.display.set_caption("Formula Invaders")
         if lives <= 0 or player.health <= 0:
             lost = True
             lost_count += 1
@@ -785,6 +877,8 @@ def game():
         if len(enemies) == 0:
             level += 1
             wave_length += waveIncrement
+            waveScore += 30
+
             for i in range(wave_length):
                 enemy = Enemy(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100),
                               random.choice(["red", "blue", "green"]))
@@ -811,16 +905,6 @@ def game():
             # play the laser sound
             Laser_Sound.play()
 
-
-
-
-
-
-
-
-
-
-
         # Handles the enemies
         for enemy in enemies[:]:
             enemy.move(enemy_vel)
@@ -838,7 +922,9 @@ def game():
 
         player.move_lasers(-laser_vel, enemies)
 
-
+    pygame.time.delay(5000)
+    # go to main menu
+    main_menu()
 
 
 main_menu()
