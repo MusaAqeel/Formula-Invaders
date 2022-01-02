@@ -378,29 +378,29 @@ def driver_selection_menu():
     run = True
 
     # Lewis Hamilton
-    lewisX = 50
-    lewisY = 50
+    lewisX = 330
+    lewisY = 300
     lewisButton = button((64, 64, 64), lewisX, lewisY, 100, 100)
 
 
     # Max Verstappen
-    verstappenX = 50
-    verstappenY = lewisY + 150
+    verstappenX = 130
+    verstappenY = 300
     verstappenButton = button((64, 64, 64), verstappenX, verstappenY, 100, 100)
 
     # Charles Leclerc
-    leclercX = 50
-    leclercY = verstappenY + 150
+    leclercX = 230
+    leclercY = 300
     leclercButton = button((64, 64, 64), leclercX, leclercY, 100, 100)
 
     # Tatiana Calderon
-    calderonX = lewisX + 150
-    calderonY = lewisY
+    calderonX = 430
+    calderonY = 300
     calderonButton = button((64, 64, 64), calderonX, calderonY, 100, 100)
 
     # Lando Norris
-    norrisX = calderonX
-    norrisY = verstappenY
+    norrisX = 530
+    norrisY = 300
     norrisButton = button((64, 64, 64), norrisX, norrisY, 100, 100)
 
     # Back Button
@@ -761,7 +761,8 @@ def game():
 
         if lost:
 
-            lost_label = lost_font.render("You Lost!!", 1, (255, 255, 255))
+            lost_label = lost_font.render("The Aliens Have Captured You!", 1, (255, 255, 255))
+
             WIN.blit(lost_label, (WIDTH / 2 - lost_label.get_width() / 2, 350))
 
         pygame.display.update()
