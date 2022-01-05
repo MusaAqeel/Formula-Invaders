@@ -1,6 +1,6 @@
 # Formula-Invaders
 
-Thanks for downloading Formula Invaders. To run the program here are the steps
+Thanks for downloading Formula Invaders. Read the folowing to run the program. 
 
 ## Mac Users:
 Download the latest version of [python](https://www.python.org/downloads/) from the offical website
