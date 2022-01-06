@@ -1,733 +1,775 @@
 /* NAV styling */
 
 html {
-    position: relative;
+  max-width: 100%;
+  position: relative;
 
-    background-color: #1F2125
-    ;
-    overflow-x: hidden;
+  background-color: #1f2125;
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
 }
 
-a { 
-    text-decoration: none;
-    color: #02B25E
+a {
+  text-decoration: none;
+  color: #02b25e;
 }
 
-a:hover { 
-    text-decoration:none; 
-    cursor:pointer;  
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .navbar-fixed {
-    position: fixed;
-    top: 0;
-    width: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
-
 
 nav {
-position: absolute;
-width: 100%;
-height: 88px;
-left: 0px;
-top: 0px;
-
-background: #181818;
+  width: 100%;
+  height: 88px;
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  background-color: #181818;
+  z-index: 3;
 }
 
-
 nav img {
-
-position: absolute;
-width: 58px;
-height: 58px;
-left: 39px;
-top: 15px;
-
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  left: 39px;
+  top: 15px;
 }
 
 .sections {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    
-    position: absolute;
-    width: 436px;
-    height: 46px;
-    right: 100px;
-    top: 22px;
-   
-    
-    
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 16px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+  position: absolute;
+  width: 436px;
+  height: 46px;
+  right: 100px;
+  top: 22px;
 
-    }
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
 
 .g-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 15px 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 30px;
 
-    position: static;
-    width: 115px;
-    height: 46px;
-    left: 321px;
-    top: 0px;
+  position: static;
+  width: 115px;
+  height: 46px;
+  left: 321px;
+  top: 0px;
 
-    background: #02B25E;
-    border: 2px solid #02B25E;
-    box-sizing: border-box;
-    border-radius: 10px;
-    }
+  background: #02b25e;
+  border: 2px solid #02b25e;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
 
 .sections .g-btn a {
-    color: white;
+  color: white;
 }
 
 /*  HOME PAGE  */
 
-
-
 h1 {
-    position: absolute;
-    left: 150px;
-    right: 600px;
-    top: 200px;
-    
-    /* Space */
-    
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 72px;
-    line-height: 79px;
-    /* or 79px */
-    
-    text-transform: capitalize;
-    color: #00D36E;
+  position: absolute;
+  left: 150px;
+  right: 600px;
+  top: 200px;
+
+  /* Space */
+
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 72px;
+  line-height: 79px;
+  /* or 79px */
+
+  text-transform: capitalize;
+  color: #00d36e;
 }
 
 h2 {
-    position: absolute;
-    width: 575px;
-    height: 130px;
-    left: 150px;
-    right: 600px;
-    top: 400px;
+  position: absolute;
+  width: 575px;
+  height: 130px;
+  left: 150px;
+  right: 600px;
+  top: 400px;
 
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 30px;
-    line-height: 33px;
-/* or 33px */
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 33px;
+  /* or 33px */
 
-    text-transform: capitalize;
+  text-transform: capitalize;
 
-    color: #00924C;
+  color: #00924c;
 }
 
 .laptop {
-    position: absolute;
-    left: 825px;
-    top: 200px;
-
-    }
-
-.laptop img {
-    width: 800px;
-    height: auto;
+  position: absolute;
+  left: 825px;
+  top: 200px;
 }
 
+.laptop img {
+  width: 800px;
+  height: auto;
+}
 
-    /* About */
+/* About */
 
 .about {
-    position: absolute;
-    width: 100%;
-    height: 710px;
-    left: 0px;
-    top: 855px;
-    
-    background: #16171B; 
-    }
+  position: absolute;
+  width: 100%;
+  height: 740px;
+  left: 0px;
+  top: 855px;
+  padding-bottom: 30px;
+
+  background: #16171b;
+}
 
 .btn-about {
-    position: absolute;
-    width: 134px;
-    height: 32px;
-    left: 633px;
-    top: 430px;
+  padding-top: 45px;
+  position: absolute;
+  width: 134px;
+  height: 32px;
+  left: 633px;
+  top: 430px;
 }
 
 .about p {
-    position: absolute;
-    width: 52px;
-    height: 22px;
-    bottom: 350px;
-    padding: 8px 38px;
-    
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 15px;
-    line-height: 110%;
-    /* or 17px */
-    
-    text-transform: capitalize;
-    
-    color: #02B25E;
-    background: #1F2125;
-    border-radius: 44px;
+  position: absolute;
+  width: 52px;
+  height: 22px;
+  bottom: 350px;
+  padding: 8px 38px;
+
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 110%;
+  /* or 17px */
+
+  text-transform: capitalize;
+
+  color: #02b25e;
+  background: #1f2125;
+  border-radius: 44px;
 }
 
 .abt-img1 {
-    position: absolute;
-    width: 450px;
-    height: auto;
-    left: 111.67px;
-    top: 150px;
-
-    filter: drop-shadow(15px 15px 10px rgba(0, 0, 0, 0.5));
+  position: absolute;
+  width: 450px;
+  height: auto;
+  left: 111.67px;
+  top: 160px;
+  filter: drop-shadow(15px 15px 10px rgba(0, 0, 0, 0.5));
+  /* -webkit-animation: linear infinite;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 5s;
+}
     
+    @-webkit-keyframes run {
+    0% {
+      left: 0;
+    }
+
+    100% {
+      left: 0;    
+    }*/
 }
 
 .abt-img2 {
-    position: absolute;
-    width: 350px;
-    height: auto;
-    left: 224px;
-    top: 200px;
+  position: absolute;
+  width: 350px;
+  height: auto;
+  left: 224px;
+  top: 210px;
 
-    filter: drop-shadow(15px 15px 10px rgba(0, 0, 0, 0.5));
-    
+  filter: drop-shadow(15px 15px 10px rgba(0, 0, 0, 0.5));
 }
 
 .tile1 {
-    position: absolute;
-    width: 270px;
-    height: 215px;
-    left: 767px;
-    top: 150px;
-    
-    background: #1F2125;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 43px;
+  position: absolute;
+  width: 270px;
+  height: 215px;
+  left: 767px;
+  top: 159px;
 
+  background: #1f2125;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 43px;
 }
-
 
 .tile2 {
-    position: absolute;
-    width: 270px;
-    height: 215px;
-    left: 1055px;
-    top: 150px;
-    
-    background: #1F2125;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 43px;
+  position: absolute;
+  width: 270px;
+  height: 215px;
+  left: 1055px;
+  top: 159px;
 
+  background: #1f2125;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 43px;
 }
-
-
 
 .tile3 {
-    position: absolute;
-    width: 270px;
-    height: 215px;
-    left: 767px;
-    top: 380px;
-    
-    background: #1F2125;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 43px;
+  position: absolute;
+  width: 270px;
+  height: 215px;
+  left: 767px;
+  top: 389px;
 
+  background: #1f2125;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 43px;
 }
 
-
 .tile4 {
-    position: absolute;
-    width: 270px;
-    height: 215px;
-    left: 1055px;
-    top: 380px;
-    
-    background: #1F2125;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 43px;
+  position: absolute;
+  width: 270px;
+  height: 215px;
+  left: 1055px;
+  top: 389px;
 
+  background: #1f2125;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 43px;
 }
 
 .tile1 img {
-    position: absolute;
-    padding: 20px;
+  position: absolute;
+  padding: 20px;
 }
 
 .tile2 img {
-    position: absolute;
-    padding: 20px;
+  position: absolute;
+  padding: 20px;
 }
 
 .tile3 img {
-    position: absolute;
-    padding: 20px;
+  position: absolute;
+  padding: 20px;
 }
 
 .tile4 img {
-    position: absolute;
-    padding: 20px;
+  position: absolute;
+  padding: 20px;
 }
 
 .tile1 h1 {
-    z-index: 1;
-    top: 10px;
-    left: 105px;  
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 26px;
-    line-height: 110%;
-    /* or 29px */
-    
-    text-transform: capitalize;
-    
-    color: #00D36E;
+  z-index: 1;
+  top: 10px;
+  left: 105px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 110%;
+  /* or 29px */
+
+  text-transform: capitalize;
+
+  color: #00d36e;
 }
 
 .tile2 h1 {
-    z-index: 1;
-    top: 10px;
-    left: 105px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 26px;
-    line-height: 110%;
-    /* or 29px */
-    
-    text-transform: capitalize;
-    
-    color: #00D36E;
+  z-index: 1;
+  top: 10px;
+  left: 105px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 110%;
+  /* or 29px */
+
+  text-transform: capitalize;
+
+  color: #00d36e;
 }
 
 .tile3 h1 {
-    z-index: 1;
-    top: 10px;
-    left: 105px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 26px;
-    line-height: 110%;
-    /* or 29px */
-    
-    text-transform: capitalize;
-    
-    color: #00D36E;
+  z-index: 1;
+  top: 10px;
+  left: 105px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 110%;
+  /* or 29px */
+
+  text-transform: capitalize;
+
+  color: #00d36e;
 }
 
 .tile4 h1 {
-    z-index: 1;
-    top: 10px;
-    left: 105px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 26px;
-    line-height: 110%;
-    /* or 29px */
-    
-    text-transform: capitalize;
-    
-    color: #00D36E;
+  z-index: 1;
+  top: 10px;
+  left: 105px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 110%;
+  /* or 29px */
+
+  text-transform: capitalize;
+
+  color: #00d36e;
 }
 
 .tile1 p {
-    position: absolute;
-    z-index: 1;
-    top: 60px;
-    left: -10px;
-    width: 239px;
-    height: 132px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    background-color: transparent;
-    /* or 17px */
-    
-    text-transform: capitalize;
-    
-    color: #FFFFFF;
+  position: absolute;
+  z-index: 1;
+  top: 60px;
+  left: -10px;
+  width: 239px;
+  height: 132px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  background-color: transparent;
+  /* or 17px */
+
+  text-transform: capitalize;
+
+  color: #ffffff;
 }
 
 .tile2 p {
-    position: absolute;
-    z-index: 1;
-    top: 60px;
-    left: -10px;
-    width: 239px;
-    height: 132px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    background-color: transparent;
-    /* or 17px */
-    
-    text-transform: capitalize;
-    
-    color: #FFFFFF;
+  position: absolute;
+  z-index: 1;
+  top: 60px;
+  left: -10px;
+  width: 239px;
+  height: 132px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  background-color: transparent;
+  /* or 17px */
+
+  text-transform: capitalize;
+
+  color: #ffffff;
 }
 
 .tile3 p {
-    position: absolute;
-    z-index: 1;
-    top: 60px;
-    left: -10px;
-    width: 239px;
-    height: 132px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    background-color: transparent;
-    /* or 17px */
-    
-    text-transform: capitalize;
-    
-    color: #FFFFFF;
+  position: absolute;
+  z-index: 1;
+  top: 60px;
+  left: -10px;
+  width: 239px;
+  height: 132px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  background-color: transparent;
+  /* or 17px */
+
+  text-transform: capitalize;
+
+  color: #ffffff;
 }
+
 .tile4 p {
-    position: absolute;
-    z-index: 1;
-    top: 60px;
-    left: -10px;
-    width: 239px;
-    height: 132px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    background-color: transparent;
-    /* or 17px */
-    
-    text-transform: capitalize;
-    
-    color: #FFFFFF;
+  position: absolute;
+  z-index: 1;
+  top: 60px;
+  left: -10px;
+  width: 239px;
+  height: 132px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  background-color: transparent;
+  /* or 17px */
+
+  text-transform: capitalize;
+
+  color: #ffffff;
 }
 
-.teams h1 {
-
-    position: absolute;
-    left: 350px;
-    right: 39.79%;
-    top: 1660px;
-    bottom: 45.57%;
-    
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 50px;
-    line-height: 110%;
-    /* or 50px */
-    
-    text-transform: capitalize;
-
+#team {
+  position: absolute;
+  width: 100%;
+  height: 21px;
+  left: 0px;
+  top: 1700px;
+  background: #1f2125;
+  z-index: -3;
 }
 
-.teams p {
-    position: absolute;
-    width: 597px;
-    height: 128px;
-    left: 350px;
-    top: 1770px;
-    
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 110%;
-    /* or 20px */
-    
-    text-transform: capitalize;
-    
-    color: #FFFFFF;
+.btn-teams {
+  position: absolute;
+  width: 134px;
+  height: 32px;
+  left: 635px;
+  top: 80px;
+  z-index: 3;
 }
 
+.btn-teams p {
+  padding: 10px 38px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 110%;
+  /* or 17px */
+
+  text-transform: capitalize;
+  background-color: #16171b;
+  border-radius: 44px;
+
+  color: #02b25e;
+}
+
+.team-txt h1 {
+  position: absolute;
+  left: 350px;
+  right: 39.79%;
+  top: 155px;
+  z-index: 1;
+
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 110%;
+  /* or 50px */
+
+  text-transform: capitalize;
+}
+
+.team-txt p {
+  position: absolute;
+  width: 597px;
+  height: 128px;
+  left: 350px;
+  top: 250px;
+
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 110%;
+  /* or 20px */
+
+  text-transform: capitalize;
+
+  color: #ffffff;
+}
 
 .moji-img {
-    position: absolute;
-    top: 1900px;
-    left: 10px;
-
-
+  position: absolute;
+  top: 350px;
+  left: 10px;
 }
 
 .aditya-moji img {
-    position: absolute;
-    left: 350px;
-    width: 150px;
-    height: auto;
-
+  position: absolute;
+  left: 350px;
+  width: 140px;
+  height: auto;
 }
 
 .musa-moji img {
-    top: 15px;
-    position: absolute;
-    left: 550px;
-    width: 110px;
-    height: auto;
+  top: 15px;
+  position: absolute;
+  left: 550px;
+  width: 100px;
+  height: auto;
 }
 
 .kaleb-moji img {
-    top: 15px;
-    position: absolute;
-    left: 750px;
-    width: 140px;
-    height: auto;
+  top: 15px;
+  position: absolute;
+  left: 750px;
+  width: 125px;
+  height: auto;
 }
 
 .arsh-moji img {
-    position: absolute;
-    top: -7 px;
-    left: 935px;
-    width: 155px;
-    height: auto;
+  position: absolute;
+  top: -7 px;
+  left: 935px;
+  width: 135px;
+  height: auto;
 }
 
 #boxes {
-    position: absolute;
-    display: flex;
-    top: 2080px;
-    left: 200px;
-
-
+  position: absolute;
+  display: flex;
+  top: 525px;
+  left: 220px;
 }
 
 #boxes img {
-    height: auto;
-    width: 200px;
-    margin: 0 27px;
+  height: auto;
+  width: 200px;
+  margin: 0 23px;
 }
 
-
-
 .Aditya {
-
-    position: absolute; 
-    height: auto;
-    width: 115px;
-    left: 380px;
-    top: 2117px;
- }
+  position: absolute;
+  height: auto;
+  width: 115px;
+  left: 390px;
+  top: 560px;
+}
 
 .Musa {
-
-    position: absolute;
-    height: auto;
-    width: 22px;
-    left: 630px;
-    top: 2115px;
+  position: absolute;
+  height: auto;
+  width: 22px;
+  left: 640px;
+  top: 560px;
 }
 
 .Kaleb {
-
-    position: absolute;
-    height:auto;
-    width: 27px;
-    left: 884px;
-    top: 2115px;
+  position: absolute;
+  height: auto;
+  width: 27px;
+  left: 885px;
+  top: 560px;
 }
 
 .Arsh {
-
-position:absolute;
-height:auto;
-width: 46px;
-left: 1135px;
-top: 2109px;
+  position: absolute;
+  height: auto;
+  width: 46px;
+  left: 1130px;
+  top: 560px;
 }
 
-.team_info h1{
-    position: absolute;
-    top: -4px;
-    left: -100px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 110%;
-    /* or 20px */
-    text-transform: capitalize;
-    
-    color: #FFFFFF;
-    
+.team_info h1 {
+  position: absolute;
+  top: -4px;
+  left: -100px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 110%;
+  /* or 20px */
+  text-transform: capitalize;
+
+  color: #ffffff;
 }
 
 .team_info p {
-    position: absolute;
-    top: 23px;
-    left: -135px;
-    width: 165px;
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 110%;
-    /* or 13px */
-    text-transform: capitalize;
-    
-    color: #DBDBDB;
+  position: absolute;
+  top: 23px;
+  left: -135px;
+  width: 165px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 110%;
+  /* or 13px */
+  text-transform: capitalize;
+
+  color: #ffffff;
 }
 
-
-.game {
-    position: absolute;
-    width: 100%;
-    height: 710px;
-    left: 0px;
-    top: 2350px;
-    background: #16171B;
-    font-family: Orbitron; 
-
+.faq {
+  position: absolute;
+  width: 100%;
+  height: 660px;
+  left: 0px;
+  top: 2400px;
+  background: #16171b;
+  font-family: Orbitron;
 }
 
-.game .faq {
-    color: #FFFFFF;
+.faq iframe {
+    margin: 250px 200px;
+}
+
+.faq .faq-sect {
+  color: #ffffff;
 }
 
 .sec-1 {
-    
-    position:absolute;
-    height: 20px;
-    width: 627px;
-    left: 671px;
-    top: 220px;
+  position: absolute;
+  height: 20px;
+  width: 434px;
+  left: 800px;
+  top: 250px;
 }
 
 .sec-2 {
+ padding-top: 55px;
+  position: absolute;
+  height: 20px;
+  width: 434px;
+  left: 800px;
+  top: 310px;
+}
 
-    position:absolute;
+
+
+.sec-3 {
+    padding-top: 20px;
+    position: absolute;
     height: 20px;
     width: 434px;
-    left: 671px;
-    top: 260px; 
-}
-
-.sec-3{
-
-    position:absolute;
-    height: 20px;
-    width: 613px;
-    left: 671px;
-    top: 300px;
-}
-
-.sec-4{
-
-    position:absolute;
-    height: 20px;
-    width: 340px;
-    left: 671px;
-    top: 340px;
-
+    left: 800px;
+    top: 400px;
 
 }
 
-.sec-5 {
 
-    position:absolute;
-    height: 20px;
-    width: 453px;
-    left: 671px;
-    top: 380px;    
-}
-
-.sec-6{
-
-    position:absolute;
-    height: 20px;
-    width: 580px;
-    left: 671px;
-    top: 420px;    
-}
-
-.sec-7{
-
-    position:absolute;
-    height: 20px;
-    width: 235px;
-    left: 671px;
-    top: 460px;    
-}
 
 hr {
-    width: 700px;
-    margin: 10px;
-    
+  width: 700px;
+  margin: 10px;
 }
+
+.faq-btn {
+  position: absolute;
+  width: 134px;
+  height: 32px;
+  left: 633px;
+  top: 500px;
+}
+
+.faq-btn p {
+  position: absolute;
+  width: 52px;
+  height: 22px;
+  bottom: 350px;
+  padding: 8px 38px;
+
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 110%;
+  /* or 17px */
+
+  text-transform: capitalize;
+
+  color: #02b25e;
+  background: #1f2125;
+  border-radius: 44px;
+}
+
+.game {
+  position: absolute;
+  width: 100%;
+  height: 700px;
+  top: 3000px;
+  background: #1f2125;
+  z-index: -3;
+}
+
 
 .game-btn {
     position: absolute;
     width: 134px;
     height: 32px;
     left: 633px;
-    top: 450px;
+    top: 85px;
 }
 
 .game-btn p {
+
     position: absolute;
     width: 52px;
     height: 22px;
-    bottom: 350px;
+    top: 10px;
     padding: 8px 38px;
-    
+  
     font-family: Orbitron;
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
     line-height: 110%;
     /* or 17px */
-    
+  
     text-transform: capitalize;
-    
-    color: #02B25E;
-    background: #1F2125;
+  
+    color: #02b25e;
+    background: #16171b;
     border-radius: 44px;
+
 }
 
-.github {
-    position:absolute;
-    width: 134px;
-    height: 32px;
-    left: 633px;
-    top: 600px;
+.game iframe {
+    margin: 175px 0px;
 }
 
-.github a {
-    padding: 8px 38px;
-    
-    font-family: Orbitron;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 15px;
-    line-height: 110%;
-    /* or 17px */
-    
-    text-transform: capitalize;
-    
-    color: #02B25E;
-    background: #1F2125;
-    border-radius: 44px;
+
+
+footer {
+  position: absolute;
+  right: 2px;
+  width: 100%;
+  height: 80px;
+  top: 3800px;
+  background-color: #16171b;
+  font-family: Orbitron;
+}
+
+.text-ftr1 {
+  padding-top: 10px;
+  padding-left: 50px;
+  position: absolute;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 110%;
+  color: #02b25e;
+}
+
+.text-ftr1 a {
+  color: #ffffff;
+}
+
+.text-ftr2 {
+  padding-top: 10px;
+  position: absolute;
+  left: 900px;
+  font-family: Orbitron;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 110%;
+  color: #02b25e;
 }
