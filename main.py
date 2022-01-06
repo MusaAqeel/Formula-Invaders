@@ -2,6 +2,7 @@
 import pygame
 import sys, os, time
 import random
+import webbrowser
 
 #Initializing
 pygame.init()
@@ -50,6 +51,7 @@ grey = (64,64,64)
 red = (255,0,0)
 green = (0,255,0)
 orange = (205,130,35)
+blue = (6,69,173)
 
 #Create Text
 def text_format(text, font, size, colour):
@@ -682,10 +684,20 @@ def credit_menu():
 	text_size = 20
 	text_colour = black
 	text_font = body_font
-	line_1_x_coord = 10
 	line_1_y_coord = 300
-	line_1 = text_format("Game Developers: ", text_font, text_size, text_colour)
+	line_1 = text_format("Game Developed by Musa and Aditya", text_font, text_size, text_colour)
+	line_1_x_coord = WIDTH/2 - line_1.get_width()/2
+	line_2_y_coord = line_1_y_coord + line_1.get_height() + 2
+	line_2 = text_format("Website designed and coded by Kaleb and Arsh", text_font, text_size, text_colour)
+	line_2_x_coord = WIDTH/2 - line_2.get_width()/2
 
+	#Webiste link button
+	web_button_width = 100
+	web_button_x_coord = WIDTH/2 - web_button_width/2
+	web_button_height = 30
+	web_button_y_coord = HEIGHT - web_button_height - 20
+	web_button = button(grey, web_button_x_coord, web_button_y_coord,web_button_width, web_button_height, blue, 20, body_font, 'Website' )
+	
 	def redraw_window():
 		#Background colour
 		WIN.fill(grey)
@@ -698,6 +710,10 @@ def credit_menu():
 
 		#Text
 		WIN.blit(line_1, (line_1_x_coord, line_1_y_coord))
+		WIN.blit(line_2 , (line_2_x_coord, line_2_y_coord))
+
+		#Button
+		web_button.draw(WIN)
 
 	run = True
 	pygame.display.set_caption("Credits Menu")
@@ -724,6 +740,9 @@ def credit_menu():
 				if back_button.isOver(pos):
 					#If the user clicks the back button
 					main_menu()
+				if web_button.isOver(pos):
+					#If the user clicks the website button
+					webbrowser.open(r"http://formulainvaders.ca/")
 
 			#Checks for mouse movement
 			if event.type == pygame.MOUSEMOTION:
@@ -731,6 +750,10 @@ def credit_menu():
 					back_button.text_colour = white
 				else:
 					back_button.text_colour = black
+				if web_button.isOver(pos):
+					web_button.colour = (50,50,50)
+				else:
+					web_button.colour = grey
 
 
 def tutorial_menu():
@@ -884,7 +907,7 @@ def game():
 			wave_length += wave_incremeant
 			wave_score +=30
 
-			if level % 4 == 0:
+			if level % 3 == 0:
 				gas_tank = Enemy(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100), "gas_tank", True)
 				enemies.append(gas_tank)
 
