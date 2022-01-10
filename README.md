@@ -2,6 +2,11 @@
 
 Thanks for downloading Formula Invaders. Read the folowing to run the program. 
 
+## Website:
+
+Visit our [website](FormulaInvaders.ca)
+
+
 ## Mac Users:
 Download the latest version of [python](https://www.python.org/downloads/) from the offical website
 
