@@ -4,7 +4,7 @@ Thanks for downloading Formula Invaders. Read the folowing to run the program.
 
 ## Website:
 
-Visit our [website](http://formulainvaders.ca/)
+Visit our [website](musaaqeel.github.io)
 
 
 ## Mac Users:
