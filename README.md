@@ -4,7 +4,7 @@ Thanks for your interest in Formula Invaders. Read the folowing to run the progr
 
 ## Website:
 
-Visit our [website](https://musaaqeel.github.io/Formula-Invaders/#home)
+Visit our [website](https://f1.musaaqeel.com)
 
 ## Winner of Best UI/UX Hack @ Maple Highs 2021 hackathon.
 
